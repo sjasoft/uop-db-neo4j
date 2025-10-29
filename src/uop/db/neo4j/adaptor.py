@@ -119,12 +119,6 @@ class Neo4jCollection(db_coll.DBCollection):
 
 class Neo4jUOP(database.Database):
     @classmethod
-    def make_test_database(cls, **kwargs):
-        import random
-        dbname = 'testdb%d' % random.randint(1, 10000)
-        return cls.make_named_database(dbname, **kwargs)
-
-    @classmethod
     def make_named_database(cls, name, **kwargs):
         return cls(dbname=name, **kwargs)
 
@@ -143,7 +137,7 @@ class Neo4jUOP(database.Database):
     def open_db(self):
         uri = self.credentials.get("uri", "bolt://localhost:7687")
         user = self.credentials.get("user", "neo4j")
-        password = self.credentials.get("password", "password")
+        password = self.credentials.get("password", "testpassword")
         self._driver = GraphDatabase.driver(uri, auth=(user, password))
         super().open_db()
 
